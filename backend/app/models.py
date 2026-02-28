@@ -33,3 +33,14 @@ class ScrapeResponse(BaseModel):
     status: str
     new_incidents: int
     message: str
+
+
+class IntegrationInfo(BaseModel):
+    id: str
+    name: str
+    description: str
+    enabled: bool
+
+
+class IntegrationToggle(BaseModel):
+    enabled: bool

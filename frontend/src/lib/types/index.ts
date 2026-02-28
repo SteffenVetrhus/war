@@ -24,3 +24,10 @@ export interface StatsResponse {
 	sources_count: number;
 	last_updated: string | null;
 }
+
+export interface Integration {
+	id: string;
+	name: string;
+	description: string;
+	enabled: boolean;
+}

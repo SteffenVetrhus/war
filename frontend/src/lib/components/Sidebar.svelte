@@ -2,6 +2,7 @@
 	import { browser } from '$app/environment';
 	import { bombingsStore } from '$lib/stores/bombings.svelte';
 	import IncidentCard from './IncidentCard.svelte';
+	import IntegrationToggles from './IntegrationToggles.svelte';
 
 	let collapsed = $state(browser ? window.innerWidth < 768 : false);
 
@@ -59,6 +60,8 @@
 				</button>
 			</div>
 		</div>
+
+		<IntegrationToggles />
 
 		{#if bombingsStore.error}
 			<div class="px-4 py-2 bg-blood/10 border-b border-blood/30 text-blood text-xs">
