@@ -27,11 +27,6 @@ WOUNDED_PATTERNS = [
     re.compile(r"(?:at\s+least\s+)(\d+)\s*(?:people\s+)?(?:wounded|injured)", re.IGNORECASE),
 ]
 
-NOTABLE_FIGURE_PATTERNS = [
-    re.compile(r"(?:commander|general|leader|official|minister|president|chief)\s+([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+)", re.IGNORECASE),
-    re.compile(r"([A-Z][a-z]+(?:\s+[A-Z][a-z]+)+),?\s+(?:a\s+)?(?:senior|top|high-ranking|military|political)\s+(?:commander|general|leader|official)", re.IGNORECASE),
-]
-
 HEADERS = {
     "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36",
     "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
@@ -76,18 +71,6 @@ def _extract_location(text: str) -> str | None:
         if location in text_lower:
             return location.title()
     return None
-
-
-def _extract_notable_figures(text: str) -> list[str]:
-    """Extract names of notable figures mentioned."""
-    figures = []
-    for pattern in NOTABLE_FIGURE_PATTERNS:
-        matches = pattern.findall(text)
-        for match in matches:
-            name = match.strip()
-            if len(name) > 3 and name not in figures:
-                figures.append(name)
-    return figures[:5]  # limit to 5
 
 
 _ALL_KEYWORDS = CONFLICT_KEYWORDS + IRAN_KEYWORDS
@@ -150,7 +133,6 @@ def _parse_article(html: str, url: str, source_name: str) -> BombingIncident | N
 
     killed = _extract_killed(text)
     wounded = _extract_wounded(text)
-    notable = _extract_notable_figures(text)
 
     # Extract date
     time_tag = soup.find("time")
@@ -174,7 +156,6 @@ def _parse_article(html: str, url: str, source_name: str) -> BombingIncident | N
         date=date_str,
         killed=killed,
         wounded=wounded,
-        notable_figures=notable,
         description=description,
         source=source_name,
         source_url=url,

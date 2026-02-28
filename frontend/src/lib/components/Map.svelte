@@ -53,19 +53,10 @@
 		const title = escapeHtml(incident.title);
 		const source = escapeHtml(incident.source);
 		const sourceUrl = encodeURI(incident.source_url);
-		const notableNames = incident.notable_figures.map(escapeHtml);
 		const attacker = escapeHtml(incident.attacker);
 		const originLoc = escapeHtml(incident.origin_location);
 		const colors = FLAG_COLORS[incident.attacker] || ['#dc2626'];
 		const attackerColor = colors[0];
-
-		const notable =
-			notableNames.length > 0
-				? `<div style="margin-top:8px;color:#f97316;">
-					<span style="color:#6b6b6b;font-size:9px;letter-spacing:0.1em;text-transform:uppercase;">Notable KIA:</span><br/>
-					${notableNames.join(', ')}
-				</div>`
-				: '';
 
 		const originInfo = originLoc
 			? `<div style="margin-top:6px;font-size:10px;color:#6b6b6b;">
@@ -93,7 +84,6 @@
 						<div style="color:#f97316;font-weight:700;font-size:18px;">${incident.wounded}</div>
 					</div>
 				</div>
-				${notable}
 				${originInfo}
 				<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(58,58,58,0.3);font-size:9px;color:#6b6b6b;display:flex;justify-content:space-between;">
 					<a href="${sourceUrl}" target="_blank" rel="noopener" style="color:#ef4444;text-decoration:none;">
