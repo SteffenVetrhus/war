@@ -12,7 +12,7 @@
 
 	const IRAN_CENTER: [number, number] = [32.4279, 53.688];
 	const DEFAULT_ZOOM = 6;
-	let mapReady = false;
+	let mapReady = $state(false);
 
 	function escapeHtml(str: string): string {
 		const div = document.createElement('div');
