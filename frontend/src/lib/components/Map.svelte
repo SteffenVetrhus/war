@@ -14,13 +14,6 @@
 	const DEFAULT_ZOOM = 5;
 	let mapReady = $state(false);
 
-	// Flag colors for each attacking country
-	const FLAG_COLORS: Record<string, string[]> = {
-		Israel: ['#0038b8', '#ffffff', '#0038b8'],
-		USA: ['#bf0a30', '#ffffff', '#002868'],
-		Iran: ['#239f40', '#ffffff', '#da0000']
-	};
-
 	function escapeHtml(str: string): string {
 		const div = document.createElement('div');
 		div.textContent = str;
@@ -53,22 +46,12 @@
 		const source = escapeHtml(incident.source);
 		const sourceUrl = encodeURI(incident.source_url);
 		const attacker = escapeHtml(incident.attacker);
-		const originLoc = escapeHtml(incident.origin_location);
-		const colors = FLAG_COLORS[incident.attacker] || ['#dc2626'];
-		const attackerColor = colors[0];
-
-		const originInfo = originLoc
-			? `<div style="margin-top:6px;font-size:10px;color:#6b6b6b;">
-				<span style="letter-spacing:0.1em;text-transform:uppercase;">Origin:</span>
-				<span style="color:${attackerColor};font-weight:600;"> ${originLoc}</span>
-			</div>`
-			: '';
 
 		return `
 			<div style="min-width:220px;font-family:'JetBrains Mono',monospace;">
 				<div style="display:flex;align-items:center;justify-content:space-between;color:#dc2626;font-weight:700;font-size:13px;text-transform:uppercase;letter-spacing:0.1em;border-bottom:1px solid rgba(220,38,38,0.3);padding-bottom:8px;margin-bottom:8px;">
 					<span>${location}</span>
-					<span style="font-size:9px;color:${attackerColor};border:1px solid ${attackerColor};padding:1px 6px;border-radius:2px;">${attacker}</span>
+					<span style="font-size:9px;color:#dc2626;border:1px solid rgba(220,38,38,0.4);padding:1px 6px;border-radius:2px;">${attacker}</span>
 				</div>
 				<div style="color:#d1d5db;font-size:11px;line-height:1.5;margin-bottom:8px;">
 					${title}
@@ -83,7 +66,6 @@
 						<div style="color:#f97316;font-weight:700;font-size:18px;">${incident.wounded}</div>
 					</div>
 				</div>
-				${originInfo}
 				<div style="margin-top:8px;padding-top:8px;border-top:1px solid rgba(58,58,58,0.3);font-size:9px;color:#6b6b6b;display:flex;justify-content:space-between;">
 					<a href="${sourceUrl}" target="_blank" rel="noopener" style="color:#ef4444;text-decoration:none;">
 						${source} &#8599;

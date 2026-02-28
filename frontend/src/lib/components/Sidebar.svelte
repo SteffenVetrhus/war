@@ -22,17 +22,26 @@
 	<!-- Toggle button -->
 	<button
 		onclick={() => (collapsed = !collapsed)}
-		class="flex items-center justify-center bg-bunker/90 backdrop-blur-sm
-			border border-ash/30 text-smoke hover:text-ember hover:border-blood/50
-			transition-colors cursor-pointer shrink-0
+		class="flex items-center justify-center gap-2 backdrop-blur-sm
+			border transition-colors cursor-pointer shrink-0
 			w-full h-8 rounded-t-md border-b-0
-			md:w-10 md:h-20 md:self-start md:mt-4 md:rounded-l-md md:rounded-tr-none md:border-r-0 md:border-b"
+			md:w-10 md:h-20 md:self-start md:mt-4 md:rounded-l-md md:rounded-tr-none md:border-r-0 md:border-b
+			{collapsed
+				? 'bg-blood/20 border-blood/50 text-ember hover:bg-blood/30 hover:border-blood/70'
+				: 'bg-bunker/90 border-ash/30 text-smoke hover:text-ember hover:border-blood/50'}"
 		aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
 	>
-		<!-- Mobile: up/down chevron -->
-		<span class="text-xs md:hidden transition-transform" class:rotate-180={!collapsed}>&#9650;</span>
+		<!-- Mobile: label + chevron -->
+		<span class="text-[10px] tracking-[0.2em] uppercase font-bold md:hidden"
+			>{collapsed ? 'STRIKE LOG' : ''}</span
+		>
+		<span class="text-xs md:hidden transition-transform" class:rotate-180={!collapsed}
+			>&#9650;</span
+		>
 		<!-- Desktop: left/right chevron -->
-		<span class="text-xs hidden md:inline transition-transform" class:rotate-180={!collapsed}>&#9666;</span>
+		<span class="text-xs hidden md:inline transition-transform" class:rotate-180={!collapsed}
+			>&#9666;</span
+		>
 	</button>
 
 	<!-- Sidebar content -->
