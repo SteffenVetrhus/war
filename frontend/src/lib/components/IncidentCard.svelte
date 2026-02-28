@@ -8,14 +8,6 @@
 	}
 
 	let { incident, isSelected, onSelect }: Props = $props();
-
-	const FLAG_COLORS: Record<string, { primary: string; label: string }> = {
-		Israel: { primary: '#0038b8', label: 'ISR' },
-		USA: { primary: '#002868', label: 'USA' },
-		Iran: { primary: '#239f40', label: 'IRN' }
-	};
-
-	const attackerInfo = $derived(FLAG_COLORS[incident.attacker] || { primary: '#dc2626', label: '???' });
 </script>
 
 <button
@@ -26,12 +18,6 @@
 >
 	<div class="flex items-center justify-between mb-1">
 		<div class="flex items-center gap-2">
-			<span
-				class="text-[9px] font-bold tracking-wider px-1.5 py-0.5 rounded-sm border"
-				style="color: {attackerInfo.primary}; border-color: {attackerInfo.primary}40;"
-			>
-				{attackerInfo.label}
-			</span>
 			<span class="text-bone text-xs font-bold tracking-wider uppercase">
 				{incident.location}
 			</span>
@@ -69,7 +55,7 @@
 	{#if isSelected && incident.origin_location}
 		<div class="mt-2 pt-2 border-t border-ash/20 text-[10px]">
 			<span class="text-smoke tracking-widest uppercase">Origin:</span>
-			<span class="font-semibold" style="color: {attackerInfo.primary};">
+			<span class="text-ember font-semibold">
 				{incident.origin_location}
 			</span>
 		</div>
