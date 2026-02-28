@@ -110,6 +110,7 @@
 
 /* Large markers for high casualties */
 .bombing-marker-lg {
+	position: relative;
 	width: 30px;
 	height: 30px;
 }

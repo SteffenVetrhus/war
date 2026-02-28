@@ -24,6 +24,11 @@ NEWS_SOURCES = [
         "url": "https://edition.cnn.com/middleeast",
         "base_url": "https://edition.cnn.com",
     },
+    {
+        "name": "VG",
+        "url": "https://www.vg.no/nyheter/utenriks/",
+        "base_url": "https://www.vg.no",
+    },
 ]
 
 SCRAPE_INTERVAL_SECONDS = 3600  # 1 hour
