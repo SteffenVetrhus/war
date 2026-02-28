@@ -209,31 +209,6 @@
 	z-index: 9998;
 }
 
-/* === ATTACK ARC ANIMATIONS === */
-@keyframes arc-flow-dash {
-	0% {
-		stroke-dashoffset: 0;
-	}
-	100% {
-		stroke-dashoffset: -100;
-	}
-}
-
-@keyframes origin-pulse {
-	0% {
-		r: 5;
-		opacity: 0.8;
-	}
-	100% {
-		r: 18;
-		opacity: 0;
-	}
-}
-
-.origin-pulse-ring {
-	animation: origin-pulse 2s ease-out infinite;
-}
-
 /* === LEAFLET OVERRIDES === */
 .leaflet-container {
 	background: var(--color-abyss) !important;
