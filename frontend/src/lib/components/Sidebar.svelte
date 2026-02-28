@@ -1,8 +1,9 @@
 <script lang="ts">
+	import { browser } from '$app/environment';
 	import { bombingsStore } from '$lib/stores/bombings.svelte';
 	import IncidentCard from './IncidentCard.svelte';
 
-	let collapsed = $state(false);
+	let collapsed = $state(browser ? window.innerWidth < 768 : false);
 
 	const sortedIncidents = $derived(
 		[...bombingsStore.incidents].sort(
@@ -12,25 +13,32 @@
 </script>
 
 <aside
-	class="absolute top-14 right-0 bottom-0 z-[999] flex transition-transform duration-300 ease-in-out"
-	class:translate-x-[calc(100%-2.5rem)]={collapsed}
+	class="absolute z-[999] flex transition-transform duration-300 ease-in-out
+		bottom-0 left-0 right-0 flex-col
+		md:top-14 md:right-0 md:left-auto md:flex-row"
+	class:sidebar-collapsed={collapsed}
 >
 	<!-- Toggle button -->
 	<button
 		onclick={() => (collapsed = !collapsed)}
-		class="self-start mt-4 w-10 h-20 bg-bunker/90 backdrop-blur-sm
-			border border-r-0 border-ash/30 rounded-l-md flex items-center
-			justify-center text-smoke hover:text-ember hover:border-blood/50
-			transition-colors cursor-pointer"
+		class="flex items-center justify-center bg-bunker/90 backdrop-blur-sm
+			border border-ash/30 text-smoke hover:text-ember hover:border-blood/50
+			transition-colors cursor-pointer shrink-0
+			w-full h-8 rounded-t-md border-b-0
+			md:w-10 md:h-20 md:self-start md:mt-4 md:rounded-l-md md:rounded-tr-none md:border-r-0 md:border-b"
 		aria-label={collapsed ? 'Expand sidebar' : 'Collapse sidebar'}
 	>
-		<span class="text-xs transition-transform" class:rotate-180={!collapsed}>&#9666;</span>
+		<!-- Mobile: up/down chevron -->
+		<span class="text-xs md:hidden transition-transform" class:rotate-180={!collapsed}>&#9650;</span>
+		<!-- Desktop: left/right chevron -->
+		<span class="text-xs hidden md:inline transition-transform" class:rotate-180={!collapsed}>&#9666;</span>
 	</button>
 
 	<!-- Sidebar content -->
 	<div
-		class="w-96 h-full bg-abyss/95 backdrop-blur-sm border-l border-blood/20
-			overflow-hidden flex flex-col"
+		class="h-[50vh] w-full bg-abyss/95 backdrop-blur-sm border-t border-blood/20
+			overflow-hidden flex flex-col
+			md:w-96 md:h-full md:border-t-0 md:border-l"
 	>
 		<!-- Sidebar header -->
 		<div class="px-4 py-3 border-b border-ash/20">
@@ -91,3 +99,15 @@
 		</div>
 	</div>
 </aside>
+
+<style>
+	.sidebar-collapsed {
+		transform: translateY(calc(100% - 2rem));
+	}
+
+	@media (min-width: 768px) {
+		.sidebar-collapsed {
+			transform: translateX(calc(100% - 2.5rem));
+		}
+	}
+</style>

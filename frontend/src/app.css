@@ -215,6 +215,26 @@
 	font-family: 'JetBrains Mono', monospace !important;
 }
 
+/* Push zoom controls below header */
+.leaflet-top.leaflet-left {
+	top: 48px;
+}
+
+@media (max-width: 767px) {
+	.leaflet-top.leaflet-left {
+		top: 40px;
+	}
+
+	.leaflet-popup-content-wrapper {
+		max-width: calc(100vw - 40px) !important;
+	}
+
+	.leaflet-popup-content {
+		margin: 8px !important;
+		font-size: 10px !important;
+	}
+}
+
 .leaflet-popup-content-wrapper {
 	background: var(--color-bunker) !important;
 	color: var(--color-dust) !important;
