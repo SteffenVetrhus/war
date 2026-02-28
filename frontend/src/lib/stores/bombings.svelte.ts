@@ -1,10 +1,11 @@
-import type { BombingIncident } from '$lib/types';
+import type { BombingIncident, Integration } from '$lib/types';
 
 let _incidents = $state<BombingIncident[]>([]);
 let _selectedId = $state<string | null>(null);
 let _loading = $state(false);
 let _error = $state<string | null>(null);
 let _lastUpdated = $state<string | null>(null);
+let _integrations = $state<Integration[]>([]);
 
 export const bombingsStore = {
 	get incidents() {
@@ -37,6 +38,9 @@ export const bombingsStore = {
 	get totalIncidents() {
 		return _incidents.length;
 	},
+	get integrations() {
+		return _integrations;
+	},
 
 	async fetchIncidents() {
 		_loading = true;
@@ -65,6 +69,31 @@ export const bombingsStore = {
 		} catch (e) {
 			_error = e instanceof Error ? e.message : 'Scrape failed';
 			_loading = false;
+		}
+	},
+
+	async fetchIntegrations() {
+		try {
+			const res = await fetch('/api/integrations');
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			_integrations = await res.json();
+		} catch (e) {
+			console.error('Failed to fetch integrations:', e);
+		}
+	},
+
+	async toggleIntegration(id: string, enabled: boolean) {
+		try {
+			const res = await fetch(`/api/integrations/${id}`, {
+				method: 'PUT',
+				headers: { 'Content-Type': 'application/json' },
+				body: JSON.stringify({ enabled })
+			});
+			if (!res.ok) throw new Error(`HTTP ${res.status}`);
+			const updated: Integration = await res.json();
+			_integrations = _integrations.map((i) => (i.id === updated.id ? updated : i));
+		} catch (e) {
+			console.error(`Failed to toggle integration ${id}:`, e);
 		}
 	},
 

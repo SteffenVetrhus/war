@@ -7,6 +7,7 @@
 
 	onMount(() => {
 		bombingsStore.fetchIncidents();
+		bombingsStore.fetchIntegrations();
 	});
 </script>
 

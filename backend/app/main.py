@@ -8,8 +8,9 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 
-from app.models import BombingIncident, StatsResponse, ScrapeResponse
-from app.scraper import scrape_all_sources
+from app.models import BombingIncident, StatsResponse, ScrapeResponse, IntegrationInfo, IntegrationToggle
+from app.scrapers import ALL_SCRAPERS
+from app.scrapers.gateway import ScraperGateway
 from app.config import SCRAPE_INTERVAL_SECONDS
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s")
@@ -22,6 +23,9 @@ INCIDENTS_FILE = DATA_DIR / "incidents.json"
 incidents_store: list[BombingIncident] = []
 last_updated: str | None = None
 scrape_task: asyncio.Task | None = None
+
+# Scraper gateway (single instance, shared across requests)
+gateway = ScraperGateway(ALL_SCRAPERS)
 
 
 def _load_incidents() -> list[BombingIncident]:
@@ -62,7 +66,7 @@ async def _scheduled_scrape():
     while True:
         try:
             logger.info("Starting scheduled scrape...")
-            new_incidents = await scrape_all_sources()
+            new_incidents = await gateway.scrape_all()
             if new_incidents:
                 added = _merge_incidents(new_incidents)
                 if added > 0:
@@ -113,6 +117,10 @@ app.add_middleware(
 )
 
 
+# ---------------------------------------------------------------------------
+# Incident endpoints
+# ---------------------------------------------------------------------------
+
 @app.get("/api/incidents", response_model=list[BombingIncident])
 async def get_incidents():
     """Return all tracked bombing incidents."""
@@ -143,10 +151,10 @@ async def get_stats():
 
 @app.post("/api/scrape", response_model=ScrapeResponse)
 async def trigger_scrape():
-    """Manually trigger a news scrape."""
+    """Manually trigger a news scrape across all enabled integrations."""
     global last_updated
     try:
-        new_incidents = await scrape_all_sources()
+        new_incidents = await gateway.scrape_all()
         added = _merge_incidents(new_incidents)
         last_updated = datetime.now(timezone.utc).isoformat()
         return ScrapeResponse(
@@ -160,3 +168,27 @@ async def trigger_scrape():
             new_incidents=0,
             message=f"Scrape failed: {str(e)}",
         )
+
+
+# ---------------------------------------------------------------------------
+# Integration management endpoints
+# ---------------------------------------------------------------------------
+
+@app.get("/api/integrations", response_model=list[IntegrationInfo])
+async def list_integrations():
+    """Return all available scraper integrations and their enabled state."""
+    return gateway.list_integrations()
+
+
+@app.put("/api/integrations/{scraper_id}", response_model=IntegrationInfo)
+async def toggle_integration(scraper_id: str, body: IntegrationToggle):
+    """Enable or disable a scraper integration."""
+    ok = gateway.set_enabled(scraper_id, body.enabled)
+    if not ok:
+        raise HTTPException(status_code=404, detail=f"Unknown integration: {scraper_id}")
+
+    # Return updated info
+    for info in gateway.list_integrations():
+        if info["id"] == scraper_id:
+            return info
+    raise HTTPException(status_code=404, detail="Integration not found")
