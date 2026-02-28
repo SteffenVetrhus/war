@@ -42,10 +42,10 @@
 	>
 		<!-- Sidebar header -->
 		<div class="px-4 py-3 border-b border-ash/20">
-			<h2 class="text-blood text-xs font-bold tracking-[0.25em] uppercase">Incident Log</h2>
+			<h2 class="text-blood text-xs font-bold tracking-[0.25em] uppercase">Strike Log // Feb 26</h2>
 			<div class="flex items-center justify-between mt-2">
 				<span class="text-smoke text-[10px] tracking-wider">
-					{bombingsStore.totalIncidents} RECORDS // {bombingsStore.totalKilled} KIA
+					{bombingsStore.totalIncidents} STRIKES // {bombingsStore.totalKilled} KIA
 				</span>
 				<button
 					onclick={() => bombingsStore.triggerScrape()}

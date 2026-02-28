@@ -15,6 +15,10 @@ class BombingIncident(BaseModel):
     description: str = ""
     source: str = ""
     source_url: str = ""
+    attacker: str = ""
+    origin_location: str = ""
+    origin_latitude: Optional[float] = None
+    origin_longitude: Optional[float] = None
 
 
 class StatsResponse(BaseModel):
