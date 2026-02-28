@@ -7,7 +7,7 @@ WARZONE MONITOR — a dystopian-themed web app that visualizes bombing incidents
 ## Architecture
 
 - **Backend**: Python 3.12 / FastAPI / BeautifulSoup4 / httpx / geopy — serves REST API on port 8000
-- **Frontend**: SvelteKit 2 / Svelte 5 / Tailwind CSS v4 / Leaflet / TypeScript — dev server on port 5173
+- **Frontend**: SvelteKit 2 / Svelte 5 / Tailwind CSS v4 / Leaflet / TypeScript — adapter-node on port 3000
 - **Data**: In-memory store with JSON file persistence (no database)
 - **Map tiles**: CartoDB Dark Matter (free, no API key)
 - **Geocoding**: Hardcoded Iranian locations with Nominatim fallback
@@ -36,7 +36,7 @@ npm run dev
 docker compose up --build
 ```
 
-Frontend available at `http://localhost:5173`, backend API at `http://localhost:8000/docs`.
+Frontend available at `http://localhost:3000`, backend API at `http://localhost:8000/docs`.
 
 ## Project Structure
 

@@ -1,4 +1,4 @@
-FROM node:22-slim
+FROM node:22-slim AS build
 
 WORKDIR /app
 
@@ -6,9 +6,19 @@ COPY package.json package-lock.json ./
 RUN npm ci
 
 COPY . .
+RUN npm run build
+
+FROM node:22-slim
+
+WORKDIR /app
+
+COPY --from=build /app/build ./build
+COPY --from=build /app/package.json .
+COPY --from=build /app/node_modules ./node_modules
 
 ENV API_URL=http://backend:8000
+ENV PORT=3000
 
-EXPOSE 5173
+EXPOSE 3000
 
-CMD ["npm", "run", "dev", "--", "--host", "0.0.0.0"]
+CMD ["node", "build"]
