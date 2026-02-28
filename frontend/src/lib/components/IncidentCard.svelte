@@ -64,11 +64,6 @@
 				<span class="text-smoke">WIA</span>
 			</span>
 		{/if}
-		{#if incident.notable_figures.length > 0}
-			<span class="text-warning ml-auto tracking-wider">
-				{incident.notable_figures.length} NOTABLE
-			</span>
-		{/if}
 	</div>
 
 	{#if isSelected && incident.origin_location}
@@ -77,15 +72,6 @@
 			<span class="font-semibold" style="color: {attackerInfo.primary};">
 				{incident.origin_location}
 			</span>
-		</div>
-	{/if}
-
-	{#if isSelected && incident.notable_figures.length > 0}
-		<div class="mt-2 pt-2 border-t border-ash/20">
-			<span class="text-smoke text-[9px] tracking-widest uppercase">Notable KIA:</span>
-			{#each incident.notable_figures as name}
-				<div class="text-flame text-[11px] mt-0.5">{name}</div>
-			{/each}
 		</div>
 	{/if}
 

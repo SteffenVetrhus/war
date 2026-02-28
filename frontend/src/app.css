@@ -2,14 +2,14 @@
 
 /* === DYSTOPIAN THEME === */
 @theme {
-	--color-void: #0a0a0a;
-	--color-abyss: #111111;
-	--color-bunker: #1a1a1a;
-	--color-trench: #252525;
-	--color-ash: #3a3a3a;
-	--color-smoke: #6b6b6b;
-	--color-dust: #9ca3af;
-	--color-bone: #d1d5db;
+	--color-void: #141418;
+	--color-abyss: #1a1a22;
+	--color-bunker: #22222c;
+	--color-trench: #2e2e38;
+	--color-ash: #44444f;
+	--color-smoke: #7e7e8a;
+	--color-dust: #b0b3bc;
+	--color-bone: #d8dae0;
 	--color-blood: #dc2626;
 	--color-ember: #ef4444;
 	--color-flame: #f97316;
@@ -204,7 +204,7 @@
 	left: 0;
 	width: 100%;
 	height: 100%;
-	background: radial-gradient(ellipse at center, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
+	background: radial-gradient(ellipse at center, transparent 65%, rgba(0, 0, 0, 0.2) 100%);
 	pointer-events: none;
 	z-index: 9998;
 }
@@ -236,8 +236,12 @@
 
 /* === LEAFLET OVERRIDES === */
 .leaflet-container {
-	background: var(--color-void) !important;
+	background: var(--color-abyss) !important;
 	font-family: 'JetBrains Mono', monospace !important;
+}
+
+.leaflet-tile-pane {
+	filter: brightness(1.6) contrast(0.95);
 }
 
 /* Push zoom controls below header */
@@ -299,7 +303,7 @@
 }
 
 .leaflet-control-attribution {
-	background: rgba(10, 10, 10, 0.85) !important;
+	background: rgba(20, 20, 24, 0.8) !important;
 	color: var(--color-smoke) !important;
 	font-size: 9px !important;
 }

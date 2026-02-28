@@ -35,9 +35,9 @@ SCRAPE_INTERVAL_SECONDS = 3600  # 1 hour
 
 CONFLICT_KEYWORDS = [
     "bomb", "bombing", "strike", "airstrike", "air strike",
-    "attack", "killed", "missile", "explosion", "casualties",
-    "shelling", "raid", "drone", "artillery", "blast",
-    "war", "combat", "offensive", "military operation",
+    "missile", "explosion", "shelling", "artillery", "blast",
+    "drone strike", "raid", "killed", "casualties",
+    "offensive", "military operation",
 ]
 
 IRAN_KEYWORDS = [
