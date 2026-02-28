@@ -6,6 +6,7 @@ logger = logging.getLogger(__name__)
 
 # Hardcoded coordinates for common Iranian cities/locations
 KNOWN_LOCATIONS: dict[str, tuple[float, float]] = {
+    # Iran
     "tehran": (35.6892, 51.3890),
     "isfahan": (32.6546, 51.6680),
     "tabriz": (38.0800, 46.2919),
@@ -40,6 +41,20 @@ KNOWN_LOCATIONS: dict[str, tuple[float, float]] = {
     "parchin": (35.5200, 51.7700),
     "natanz": (33.5131, 51.9164),
     "fordow": (34.7089, 51.0375),
+    # Israel
+    "tel aviv": (32.0853, 34.7818),
+    "haifa": (32.7940, 34.9896),
+    "nevatim afb": (31.2083, 34.6667),
+    "dimona": (31.0700, 35.2100),
+    "jerusalem": (31.7683, 35.2137),
+    "beer sheva": (31.2520, 34.7915),
+    # Iraq (US bases)
+    "al asad air base": (33.7856, 42.4411),
+    "erbil": (36.1912, 44.0119),
+    # Qatar
+    "al udeid air base": (25.1171, 51.3150),
+    # Gulf
+    "gulf of oman": (25.5000, 57.0000),
 }
 
 _geocode_cache: dict[str, tuple[float, float] | None] = {}

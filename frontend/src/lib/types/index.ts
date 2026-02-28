@@ -11,6 +11,10 @@ export interface BombingIncident {
 	description: string;
 	source: string;
 	source_url: string;
+	attacker: string;
+	origin_location: string;
+	origin_latitude: number | null;
+	origin_longitude: number | null;
 }
 
 export interface StatsResponse {

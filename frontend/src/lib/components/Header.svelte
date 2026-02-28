@@ -14,13 +14,12 @@
 			<span class="relative inline-flex h-2 w-2 rounded-full bg-blood"></span>
 		</div>
 		<h1 class="text-blood font-bold text-sm md:text-lg tracking-[0.2em] md:tracking-[0.3em] uppercase glitch-text">WARZONE</h1>
-		<span class="text-smoke text-xs tracking-widest hidden sm:inline">// IRAN CONFLICT MONITOR</span>
+		<span class="text-smoke text-xs tracking-widest hidden sm:inline">// FEB 26 2026</span>
 	</div>
 
 	<div class="flex items-center gap-2 md:gap-6 text-xs text-smoke tracking-wider">
 		<span class="hidden md:inline">
-			INCIDENTS: <span class="text-ember font-bold tabular-nums">{bombingsStore.totalIncidents}</span
-			>
+			STRIKES: <span class="text-ember font-bold tabular-nums">{bombingsStore.totalIncidents}</span>
 		</span>
 		<span>
 			KIA: <span class="text-blood font-bold tabular-nums">{bombingsStore.totalKilled}</span>

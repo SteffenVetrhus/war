@@ -8,6 +8,14 @@
 	}
 
 	let { incident, isSelected, onSelect }: Props = $props();
+
+	const FLAG_COLORS: Record<string, { primary: string; label: string }> = {
+		Israel: { primary: '#0038b8', label: 'ISR' },
+		USA: { primary: '#002868', label: 'USA' },
+		Iran: { primary: '#239f40', label: 'IRN' }
+	};
+
+	const attackerInfo = $derived(FLAG_COLORS[incident.attacker] || { primary: '#dc2626', label: '???' });
 </script>
 
 <button
@@ -17,13 +25,22 @@
 		{isSelected ? 'bg-blood/10 border-l-2 border-l-blood' : 'border-l-2 border-l-transparent'}"
 >
 	<div class="flex items-center justify-between mb-1">
-		<span class="text-bone text-xs font-bold tracking-wider uppercase">
-			{incident.location}
-		</span>
+		<div class="flex items-center gap-2">
+			<span
+				class="text-[9px] font-bold tracking-wider px-1.5 py-0.5 rounded-sm border"
+				style="color: {attackerInfo.primary}; border-color: {attackerInfo.primary}40;"
+			>
+				{attackerInfo.label}
+			</span>
+			<span class="text-bone text-xs font-bold tracking-wider uppercase">
+				{incident.location}
+			</span>
+		</div>
 		<span class="text-smoke text-[10px] tabular-nums">
-			{new Date(incident.date).toLocaleDateString('en-US', {
-				month: 'short',
-				day: 'numeric'
+			{new Date(incident.date).toLocaleTimeString('en-US', {
+				hour: '2-digit',
+				minute: '2-digit',
+				hour12: false
 			})}
 		</span>
 	</div>
@@ -53,6 +70,15 @@
 			</span>
 		{/if}
 	</div>
+
+	{#if isSelected && incident.origin_location}
+		<div class="mt-2 pt-2 border-t border-ash/20 text-[10px]">
+			<span class="text-smoke tracking-widest uppercase">Origin:</span>
+			<span class="font-semibold" style="color: {attackerInfo.primary};">
+				{incident.origin_location}
+			</span>
+		</div>
+	{/if}
 
 	{#if isSelected && incident.notable_figures.length > 0}
 		<div class="mt-2 pt-2 border-t border-ash/20">
